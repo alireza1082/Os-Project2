@@ -5,6 +5,8 @@
 static int running_process_id;
 static ucontext_t mContext[2];
 static ucontext_t mContext_main;
+static ucontext_t mContext_done;
+static int p1_flag;
 
 void yield()
 {
