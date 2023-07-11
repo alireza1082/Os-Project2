@@ -40,10 +40,11 @@ void go_to_done(int pid){
 }
 
 void switch_to_main(int num){
-    if (p1_done & p2_done) {
+    if (p1_done == 1 && p2_done == 1) {
         printf("switch to main context from done context %d\n", num);
         swapcontext(&mContext_done, &mContext_main);
-    }
+    } else
+        return;
 }
 
 void make_done(){
