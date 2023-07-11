@@ -31,9 +31,9 @@ void yield()
 }
 
 void go_to_done(int pid){
-    if (pid == 0)
+    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
         p1_done = 1;
-    if (pid == 1)
+    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
         p2_done = 1;
     printf("switch to done context\n");
     swapcontext(&mContext[pid], &mContext_done);
@@ -43,8 +43,7 @@ void switch_to_main(int num){
     if (p1_done == 1 && p2_done == 1) {
         printf("switch to main context from done context %d\n", num);
         swapcontext(&mContext_done, &mContext_main);
-    } else
-        return;
+    }
 }
 
 void make_done(){
