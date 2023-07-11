@@ -18,16 +18,15 @@ void yield()
     printf("yield from pid %d to pid %d\n", running_process_id, 1 - running_process_id);
     if (running_process_id == 0)
     {
-        p1_flag1 = 1;
         running_process_id = 1;
         swapcontext(&mContext[0], &mContext[1]);
     }
     else
     {
-        p2_flag1 = 1;
         running_process_id = 0;
         swapcontext(&mContext[1], &mContext[0]);
     }
+    go_to_done(pid);
 }
 
 void go_to_done(int pid){
@@ -43,7 +42,8 @@ void switch_to_main(int num){
     if (p1_done == 1 && p2_done == 1) {
         printf("switch to main context from done context %d\n", num);
         swapcontext(&mContext_done, &mContext_main);
-    }
+    } else
+        yield();
 }
 
 void make_done(){
@@ -60,14 +60,25 @@ void some_job(int pid, int max_num)
 {
     for(int i = -max_num; i < 0; i++)
         printf("pid %d -> %d\n", pid, i);
+
+    if (pid == 0)
+        p1_flag1 = 1;
+    else if (pid == 1)
+        p2_flag1 = 1;
+
     yield();
     for(int i = 1; i <= max_num; i++)
         printf("pid %d -> %d\n", pid, i);
+
     if (pid == 0)
         p1_flag2 = 1;
     else if (pid == 1)
         p2_flag2 = 1;
-    go_to_done(pid);
+
+    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
+        printf("all done");
+    else
+        yield();
 }
 
 int main(int argc, char *argv[])
