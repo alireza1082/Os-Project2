@@ -63,19 +63,27 @@ void some_job(int pid, int max_num)
     for(int i = -max_num; i < 0; i++)
         printf("pid %d -> %d\n", pid, i);
 
-    if (pid == 0)
+    if (pid == 0) {
         p1_flag1 = 1;
-    else if (pid == 1)
+        printf("change flag1 of p1 to 1\n");
+    }
+    else if (pid == 1) {
         p2_flag1 = 1;
+        printf("change flag1 of p2 to 1\n");
+    }
 
     yield();
     for(int i = 1; i <= max_num; i++)
         printf("pid %d -> %d\n", pid, i);
 
-    if (pid == 0)
+    if (pid == 0) {
         p1_flag2 = 1;
-    else if (pid == 1)
+        printf("change flag2 of p1 to 1\n");
+    }
+    else if (pid == 1) {
         p2_flag2 = 1;
+        printf("change flag2 of p2 to 1\n");
+    }
 
     if (p1_flag1 == 1 && p1_flag2 == 1 && p2_flag1 == 1 && p2_flag2 == 1)
         printf("all done");
