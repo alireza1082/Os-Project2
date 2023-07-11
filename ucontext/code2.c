@@ -26,14 +26,14 @@ void yield()
         running_process_id = 0;
         swapcontext(&mContext[1], &mContext[0]);
     }
-    go_to_done(pid);
+    go_to_done(running_process_id);
 }
 
 void go_to_done(int pid){
-    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
-        p1_done = 1;
-    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
-        p2_done = 1;
+//    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
+//        p1_done = 1;
+//    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
+//        p2_done = 1;
     printf("switch to done context\n");
     swapcontext(&mContext[pid], &mContext_done);
 }
