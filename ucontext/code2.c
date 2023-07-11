@@ -14,10 +14,7 @@ static int p2_flag2;
 static int p2_done;
 
 void go_to_done(int pid){
-//    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
-//        p1_done = 1;
-//    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
-//        p2_done = 1;
+    printf("all done\n");
     printf("switch to done context\n");
     swapcontext(&mContext[pid], &mContext_done);
 }
@@ -84,11 +81,7 @@ void some_job(int pid, int max_num)
         p2_flag2 = 1;
         printf("change flag2 of p2 to 1\n");
     }
-
-    if (p1_flag1 == 1 && p1_flag2 == 1 && p2_flag1 == 1 && p2_flag2 == 1)
-        printf("all done");
-    else
-        yield();
+    yield();
 }
 
 int main(int argc, char *argv[])
