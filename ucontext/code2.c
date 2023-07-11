@@ -24,6 +24,9 @@ void go_to_done(int pid){
 
 void yield()
 {
+    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
+        go_to_done(running_process_id);
+
     printf("yield from pid %d to pid %d\n", running_process_id, 1 - running_process_id);
     if (running_process_id == 0)
     {
@@ -35,8 +38,6 @@ void yield()
         running_process_id = 0;
         swapcontext(&mContext[1], &mContext[0]);
     }
-    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
-        go_to_done(running_process_id);
 }
 
 void switch_to_main(int num){
