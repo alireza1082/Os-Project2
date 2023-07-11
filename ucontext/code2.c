@@ -58,7 +58,6 @@ void make_done(){
 
 void some_job(int pid, int max_num)
 {
-    make_done();
     for(int i = -max_num; i < 0; i++)
         printf("pid %d -> %d\n", pid, i);
     yield();
@@ -92,6 +91,7 @@ int main(int argc, char *argv[])
     p2_done = 0;
     makecontext(&mContext[1], (void(*) (void))some_job, 2, 2, 5);
 
+    make_done();
     running_process_id = 0;
     swapcontext(&mContext_main, mContext);
     printf("Returned to main function");
