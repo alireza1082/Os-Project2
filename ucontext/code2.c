@@ -45,8 +45,12 @@ void switch_to_main(int num){
 }
 
 void make_done(){
+    char stack3[4*1024];
     getcontext(&mContext_done);
+    mContext[0].uc_stack.ss_sp = stack3;
+    mContext[0].uc_stack.ss_size = sizeof(stack3);
     printf("make done context");
+
     makecontext(&mContext_done, (void(*) (void)) switch_to_main, 1, 1);
 }
 
