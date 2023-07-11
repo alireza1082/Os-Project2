@@ -30,6 +30,15 @@ void yield()
     }
 }
 
+void go_to_done(int pid){
+    if (pid == 0)
+        p1_done = 1;
+    if (pid == 1)
+        p2_done = 1;
+    printf("switch to done context");
+    swapcontext(&mContext[pid], &mContext_done);
+}
+
 void some_job(int pid, int max_num)
 {
     for(int i = -max_num; i < 0; i++)
@@ -42,15 +51,6 @@ void some_job(int pid, int max_num)
     else if (pid == 1)
         p2_flag2 = 1;
     go_to_done(pid);
-}
-
-void go_to_done(int pid){
-    if (pid == 0)
-        p1_done = 1;
-    if (pid == 1)
-        p2_done = 1;
-    printf("switch to done context");
-    swapcontext(&mContext[pid], mContext_done);
 }
 
 void switch_to_main(){
