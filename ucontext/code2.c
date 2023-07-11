@@ -39,6 +39,17 @@ void go_to_done(int pid){
     swapcontext(&mContext[pid], &mContext_done);
 }
 
+void switch_to_main(int num){
+    printf("switch to main context from done context %d", num);
+    swapcontext(&mContext_done, &mContext_main);
+}
+
+void make_done(){
+    getcontext(&mContext_done);
+    printf("make done context");
+    makecontext(&mContext_done, (void(*) (void)) switch_to_main, 1, 1);
+}
+
 void some_job(int pid, int max_num)
 {
     make_done();
@@ -52,17 +63,6 @@ void some_job(int pid, int max_num)
     else if (pid == 1)
         p2_flag2 = 1;
     go_to_done(pid);
-}
-
-void switch_to_main(int num){
-    printf("switch to main context from done context %d", num);
-    swapcontext(&mContext_done, &mContext_main);
-}
-
-void make_done(){
-    getcontext(&mContext_done);
-    printf("make done context");
-    makecontext(&mContext_done, (void(*) (void)) switch_to_main, 1, 1);
 }
 
 int main(int argc, char *argv[])
