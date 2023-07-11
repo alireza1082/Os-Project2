@@ -13,6 +13,15 @@ static int p2_flag1;
 static int p2_flag2;
 static int p2_done;
 
+void go_to_done(int pid){
+//    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
+//        p1_done = 1;
+//    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
+//        p2_done = 1;
+    printf("switch to done context\n");
+    swapcontext(&mContext[pid], &mContext_done);
+}
+
 void yield()
 {
     printf("yield from pid %d to pid %d\n", running_process_id, 1 - running_process_id);
@@ -26,16 +35,8 @@ void yield()
         running_process_id = 0;
         swapcontext(&mContext[1], &mContext[0]);
     }
-    go_to_done(running_process_id);
-}
-
-void go_to_done(int pid){
-//    if (pid == 0 && p1_flag1 == 1 && p1_flag2 == 1)
-//        p1_done = 1;
-//    if (pid == 1 && p2_flag1 == 1 && p2_flag2 == 1)
-//        p2_done = 1;
-    printf("switch to done context\n");
-    swapcontext(&mContext[pid], &mContext_done);
+    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
+        go_to_done(running_process_id);
 }
 
 void switch_to_main(int num){
