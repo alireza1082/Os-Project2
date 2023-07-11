@@ -35,12 +35,12 @@ void go_to_done(int pid){
         p1_done = 1;
     if (pid == 1)
         p2_done = 1;
-    printf("switch to done context");
+    printf("switch to done context\n");
     swapcontext(&mContext[pid], &mContext_done);
 }
 
 void switch_to_main(int num){
-    printf("switch to main context from done context %d", num);
+    printf("switch to main context from done context %d\n", num);
     swapcontext(&mContext_done, &mContext_main);
 }
 
@@ -49,7 +49,7 @@ void make_done(){
     getcontext(&mContext_done);
     mContext_done.uc_stack.ss_sp = stack3;
     mContext_done.uc_stack.ss_size = sizeof(stack3);
-    printf("make done context");
+    printf("make done context\n");
 
     makecontext(&mContext_done, (void(*) (void)) switch_to_main, 1, 1);
 }
