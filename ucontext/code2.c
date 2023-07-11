@@ -39,7 +39,7 @@ void some_job(int pid, int max_num)
         p1_flag2 = 1;
     else if (pid == 1)
         p2_flag2 = 1;
-    go_to_done(pid)
+    go_to_done(pid);
 }
 
 void go_to_done(int pid){
