@@ -33,6 +33,7 @@
 برنامه باید دوباره به متن دوم باز می‌گشت ت و اجرای آن تمام می‌شد د ولی اجرای متن دوم نصفه باقی ماند.
 
 خروجی به صورت زیر است:
+
 pid 1 -> -3
 pid 1 -> -2
 pid 1 -> -1
@@ -49,5 +50,38 @@ pid 1 -> 3
 
 - ب
 
+برای این بخش برای هر متن دو فلگ اتمام حلقه اول و اتمام حلفه دوم در نظر گرفته شده است
+اگر همه فلگ ها ۱ شده باشند به متن اصلی باز خواهیم گشت.
+
+خروجی به صورت زیر خواهد شد:
+
+make done context
+pid 1 -> -3
+pid 1 -> -2
+pid 1 -> -1
+change flag1 of p1 to 1
+yield from pid 0 to pid 1
+pid 2 -> -5
+pid 2 -> -4
+pid 2 -> -3
+pid 2 -> -2
+pid 2 -> -1
+change flag1 of p2 to 1
+yield from pid 1 to pid 0
+pid 1 -> 1
+pid 1 -> 2
+pid 1 -> 3
+change flag2 of p1 to 1
+yield from pid 0 to pid 1
+pid 2 -> 1
+pid 2 -> 2
+pid 2 -> 3
+pid 2 -> 4
+pid 2 -> 5
+change flag2 of p2 to 1
+all done
+switch to done context
+switch to main context from done context 1
+Returned to main function
 
 </div>
