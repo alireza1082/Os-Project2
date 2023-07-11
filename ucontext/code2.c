@@ -43,17 +43,17 @@ void some_job(int pid, int max_num)
 }
 
 void go_to_done(int pid){
-    printf("switch to done context")
+    printf("switch to done context");
     swapcontext(&mContext[pid], mContext_done);
 }
 
 void make_done(int pid){
-    printf("make done context")
+    printf("make done context");
     makecontext(&mContext[0], (void(*) (void)) switch_to_main, 0);
 }
 
 void switch_to_main(){
-    printf("switch to main context from done context")
+    printf("switch to main context from done context");
     swapcontext(&mContext_done, &mContext_main);
 }
 
