@@ -24,7 +24,7 @@ void go_to_done(int pid){
 
 void yield()
 {
-    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
+    if (p1_flag1 == 1 && p1_flag2 == 1 && p2_flag1 == 1 && p2_flag2 == 1)
         go_to_done(running_process_id);
 
     printf("yield from pid %d to pid %d\n", running_process_id, 1 - running_process_id);
@@ -77,7 +77,7 @@ void some_job(int pid, int max_num)
     else if (pid == 1)
         p2_flag2 = 1;
 
-    if (p1_flag1 & p1_flag2 & p2_flag1 & p2_flag2)
+    if (p1_flag1 == 1 && p1_flag2 == 1 && p2_flag1 == 1 && p2_flag2 == 1)
         printf("all done");
     else
         yield();
